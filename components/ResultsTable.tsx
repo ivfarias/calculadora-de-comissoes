@@ -6,8 +6,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { jsPDF } from 'jspdf'
 import * as XLSX from 'xlsx'
 
-export default function ResultsTable({ commissions }) {
-  const [exportFormat, setExportFormat] = useState('pdf')
+// Define the type for a commission entry
+type Commission = {
+  seller: string;
+  amount: number;
+  date: string;
+}
+
+// Define the props type for the ResultsTable component
+interface ResultsTableProps {
+  commissions: Commission[];
+}
+
+export default function ResultsTable({ commissions }: ResultsTableProps) {
+  const [exportFormat, setExportFormat] = useState<'pdf' | 'excel' | 'csv'>('pdf')
 
   const exportResults = () => {
     if (exportFormat === 'pdf') {
@@ -70,7 +82,7 @@ export default function ResultsTable({ commissions }) {
               </TableBody>
             </Table>
             <div className="flex gap-4 mt-4">
-              <Select value={exportFormat} onValueChange={setExportFormat}>
+              <Select value={exportFormat} onValueChange={(value: 'pdf' | 'excel' | 'csv') => setExportFormat(value)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Formato de Exportação" />
                 </SelectTrigger>
@@ -90,3 +102,4 @@ export default function ResultsTable({ commissions }) {
     </Card>
   )
 }
+

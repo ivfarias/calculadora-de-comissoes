@@ -1,7 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
-export default function CommissionHistory({ history }) {
+// Define the type for a commission entry
+type CommissionEntry = {
+  seller: string;
+  amount: number;
+  date: string;
+}
+
+// Define the props type for the CommissionHistory component
+interface CommissionHistoryProps {
+  history: CommissionEntry[];
+}
+
+export default function CommissionHistory({ history }: CommissionHistoryProps) {
   return (
     <Card>
       <CardHeader>

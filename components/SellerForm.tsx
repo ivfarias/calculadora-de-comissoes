@@ -1,16 +1,29 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-export default function SellerForm({ addSeller }) {
-  const [name, setName] = useState('')
+interface Seller {
+  name: string;
+  id: number;
+}
 
-  const handleSubmit = (e) => {
+interface SellerFormProps {
+  addSeller: (seller: Seller) => void;
+}
+
+export default function SellerForm({ addSeller }: SellerFormProps) {
+  const [name, setName] = useState<string>('')
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (name.trim()) {
       addSeller({ name, id: Date.now() })
       setName('')
     }
+  }
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
   }
 
   return (
@@ -20,7 +33,7 @@ export default function SellerForm({ addSeller }) {
         <Input
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
           placeholder="Nome do Vendedor"
           className="flex-grow"
         />

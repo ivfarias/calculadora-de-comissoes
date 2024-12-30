@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 export default function ScenarioSimulation() {
-  const [targetSales, setTargetSales] = useState('')
-  const [commissionRate, setCommissionRate] = useState('')
-  const [projectedCommission, setProjectedCommission] = useState(null)
+  const [targetSales, setTargetSales] = useState<string>('')
+  const [commissionRate, setCommissionRate] = useState<string>('')
+  const [projectedCommission, setProjectedCommission] = useState<number | null>(null)
 
   const simulateScenario = () => {
     const sales = parseFloat(targetSales)
@@ -15,6 +15,10 @@ export default function ScenarioSimulation() {
     }
   }
 
+  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setter(e.target.value)
+  }
+
   return (
     <div className="mb-8">
       <h2 className="text-1xl font-semibold mb-4 text-gray-800">Simulação de Cenário</h2>
@@ -22,13 +26,13 @@ export default function ScenarioSimulation() {
         <Input
           type="number"
           value={targetSales}
-          onChange={(e) => setTargetSales(e.target.value)}
+          onChange={handleInputChange(setTargetSales)}
           placeholder="Meta de Vendas (R$)"
         />
         <Input
           type="number"
           value={commissionRate}
-          onChange={(e) => setCommissionRate(e.target.value)}
+          onChange={handleInputChange(setCommissionRate)}
           placeholder="Taxa de Comissão (%)"
         />
         <Button onClick={simulateScenario} className="bg-emerald-500 hover:bg-emerald-600 text-white">

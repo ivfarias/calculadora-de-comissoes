@@ -3,21 +3,34 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-export default function CommissionForm({ sellers, calculateCommission }) {
+// Define types for our props and data structures
+type Seller = {
+  id: number;
+  name: string;
+};
+
+type CalculateCommissionFunction = (data: { seller: string; amount: number }) => void;
+
+interface CommissionFormProps {
+  sellers: Seller[];
+  calculateCommission: CalculateCommissionFunction;
+}
+
+export default function CommissionForm({ sellers, calculateCommission }: CommissionFormProps) {
   const [seller, setSeller] = useState('')
   const [saleValue, setSaleValue] = useState('')
   const [commissionType, setCommissionType] = useState('percentage')
   const [commissionValue, setCommissionValue] = useState('')
   const [cost, setCost] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // Implement commission calculation logic here
     const amount = calculateCommissionAmount()
     calculateCommission({ seller, amount })
   }
 
-  const calculateCommissionAmount = () => {
+  const calculateCommissionAmount = (): number => {
     // Implement different calculation methods based on commissionType
     // This is a simplified example
     const sale = parseFloat(saleValue)
@@ -33,8 +46,8 @@ export default function CommissionForm({ sellers, calculateCommission }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mb-8">
-      <h2 className="text-1xl font-semibold mb-4 text-gray-800">Calcular comissão</h2>
+    <form onSubmit={handleSubmit} className="mb-6">
+      <h2 className="text-1xl font-semibold text-gray-800 mb-4">Calcular Comissão</h2>
       <div className="grid grid-cols-2 gap-4 mb-4">
         <Select onValueChange={setSeller}>
           <SelectTrigger>
