@@ -60,7 +60,7 @@ export default function Calculator() {
             height={40}
             className="dark:invert mb-2"
           />
-          <h1 className="text-3xl font-bold mb-8 text-gray-800">Calculadora de Comissão de Vendas</h1>
+          <h1 className="text-2xl font-bold mb-8 text-gray-800">Calculadora de Comissão de Vendas</h1>
           <div className="space-y-8">
             <SellerForm addSeller={addSeller} />
             <CommissionForm sellers={sellers} calculateCommission={calculateCommission} />
